@@ -6,6 +6,10 @@ spec:
       steps:
       - name: test
         type: run
+        when: |
+          build.event == "pull_request"
+          and
+          build.target == "main"
         spec:
           container: alpine:latest
           script: |
