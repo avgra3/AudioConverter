@@ -1,32 +1,18 @@
 kind: pipeline
 spec:
-  stages:
-    - name: build
-      spec:
-        platform:
-          arch: amd64
-          os: linux
-        steps:
-          - spec:
-              container:
-                image: alpine:3
-              script:
-                - echo hello gitness
-            type: run
-          - spec:
-              inputs:
-                author_email: antonygradillas@gmail.com
-                author_name: Antony
-                branch: main
-                commit: true
-                commit_message: push from gitness:drone
-                local_branch: main
-                ssh_key: ""
-                remote_name: upstream
-                remote: git@github.com:avgra3/AudioConverter.git
-                skip_verify: true
-                path: https://github.com/avgra3/AudioConverter.git
-              name: git-push
-            name: Push to GH
-      type: ci
+  inputs:
+    author_email: antonygradillas@gmail.com
+    author_name: Antony
+    branch: main
+    commit: true
+    commit_message: push from gitness:drone
+    local_branch: main
+    ssh_key: ""
+    remote_name: upstream
+    remote: git@github.com:avgra3/AudioConverter.git
+    skip_verify: true
+    path: https://github.com/avgra3/AudioConverter.git
+  name: git-push
+name: Push to GH
+type: ci
 version: 1
