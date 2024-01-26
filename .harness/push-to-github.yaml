@@ -19,6 +19,7 @@ spec:
             git push upstream
             cd ..
             rm -rf AudioConverter.git
+            echo ${{ secrets.get("github_email") }}
         type: run
     type: ci
 version: 1
