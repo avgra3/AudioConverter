@@ -12,11 +12,11 @@ spec:
             image: alpine:3
           script: |
             apk add git
-            git clone --bare http://192.168.0.12:3000/git/AverageAudioBook/AudioConverter.git
-            cd ./AudioConverter.git
+            # git clone --bare http://192.168.0.12:3000/git/AverageAudioBook/AudioConverter.git
+            # cd ./AudioConverter.git
             git push --mirror https://github.com/avgra3/AudioConverter.git
-            cd ..
-            rm -rf AudioConverter.git
+            # cd ..
+            # rm -rf AudioConverter.git
         type: run
     type: ci
 version: 1
