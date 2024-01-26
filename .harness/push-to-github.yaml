@@ -1,0 +1,17 @@
+kind: pipeline
+spec:
+  stages:
+  - name: build
+    spec:
+      platform:
+        arch: amd64
+        os: linux
+      steps:
+      - spec:
+          container:
+            image: alpine:3
+          script:
+          - echo hello gitness
+        type: run
+    type: ci
+version: 1
