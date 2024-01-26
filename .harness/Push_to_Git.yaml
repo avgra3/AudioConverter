@@ -9,7 +9,7 @@ spec:
         spec:
           container: alpine:latest
           script: |
-            apk install git
+            apk add git
           inputs:
             author_email: ${{ secrets.get("github_username") }}
             author_name: Antony
