@@ -11,14 +11,14 @@ spec:
           container:
             image: alpine:3
           script: |-
-            apk add git
-            git config --global user.email=${{ secrets.get("github_email") }}
-            git config --global user.name=${{ vsecrets.get("github_username") }}
-            git clone --bare http://192.168.0.12:3000/git/AverageAudioBook/AudioConverter.git
-            cd ./AudioConverter.git
-            git push upstream
-            cd ..
-            rm -rf AudioConverter.git
+            apk add git &&
+            git config --global user.email=${{ secrets.get("github_email") }} &&
+            git config --global user.name=${{ vsecrets.get("github_username") }} &&
+            git clone --bare http://192.168.0.12:3000/git/AverageAudioBook/AudioConverter.git &&
+            cd ./AudioConverter.git &&
+            git push upstream &&
+            cd .. &&
+            rm -rf AudioConverter.git &&
             echo ${{ secrets.get("github_email") }}
         type: run
     type: ci
