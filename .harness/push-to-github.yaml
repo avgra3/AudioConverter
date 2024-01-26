@@ -10,8 +10,9 @@ spec:
       - spec:
           container:
             image: alpine:3
-          script:
-          - git push --mirror https://github.com/avgra3/AudioConverter.git
+          script: |
+            apk add git
+            git push --mirror https://github.com/avgra3/AudioConverter.git
         type: run
     type: ci
 version: 1
