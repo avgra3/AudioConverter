@@ -12,8 +12,8 @@ spec:
             image: alpine:3
           script: |
             apk add git
-            git config --global user.email=${{github_email}}
-            git config --global user.name=${{github_username}}
+            git config --global user.email=${{ secrets.github_email }}
+            git config --global user.name=${{ variable.github_username }}
             # git clone --bare http://192.168.0.12:3000/git/AverageAudioBook/AudioConverter.git
             # cd ./AudioConverter.git
             git push upstream
