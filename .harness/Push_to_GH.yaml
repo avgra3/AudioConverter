@@ -1,8 +1,9 @@
-kind: plugin
+kind: pipeline
 spec:
   stages:
       - name: Push to GH
-        spec:
+        type: cd
+        StageCD:
         inputs:
           author_email: antonygradillas@gmail.com
           author_name: avgra3
