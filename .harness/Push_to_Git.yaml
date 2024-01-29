@@ -1,29 +1,11 @@
 kind: pipeline
-spec:
-  stages:
-  - type: ci
-    spec:
-      steps:
-      - name: test
-        type: run
-        when: |
-          build.event == "pull_request"
-          and
-          build.target == "main"
-        spec:
-          container: alpine:latest
-          script: |
-            apk add git
-            git push upstream
-          inputs:
-            author_email: ${{ secrets.get("github_username") }}
-            author_name: Antony
-            branch: main
-            commit: true
-            commit_message: push from gitness:drone
-            local_branch: main
-            ssh_key: "git@github.com:avgra3/AudioConverter.git"
-            remote_name: upstream
-            remote: git@github.com:avgra3/AudioConverter.git
-            skip_verify: true
-            path: https://github.com/avgra3/AudioConverter.git
+name: push_to_github
+
+steps:
+- name: git-push
+  image: appleboy/drone-git-push
+  settings:
+    branch: master
+    remote: git@github.com:avgra3/AudioConverter.git
+    force: false
+    commit: true
