@@ -21,7 +21,7 @@ spec:
             commit: true
             commit_message: push from gitness:drone
             local_branch: main
-            ssh_key: ""
+            ssh_key: "git@github.com:avgra3/AudioConverter.git"
             remote_name: upstream
             remote: git@github.com:avgra3/AudioConverter.git
             skip_verify: true
