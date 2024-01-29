@@ -1,11 +1,18 @@
 kind: pipeline
-name: push_to_github
+pipeline:
+  stages:
+    - identifier: default
+      name: default
+      steps:
+        - identifier: git-push
+          name: git-push
+          spec:
+            connectorRef: account.docker
+            image: appleboy/drone-git-push
+            type: Plugin
+            settings:
+              branch: master
+              remote: git@github.com:avgra3/AudioConverter.git
+              force: false
+              commit: true
 
-steps:
-- name: git-push
-  image: appleboy/drone-git-push
-  settings:
-    branch: master
-    remote: https://github.com/avgra3/AudioConverter.git
-    force: false
-    commit: true
