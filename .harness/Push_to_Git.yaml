@@ -1,17 +1,12 @@
-pipeline:
-  stages:
-    - identifier: default
-      name: default
-      steps:
-        - identifier: git-push
-          name: git-push
-          spec:
-            connectorRef: account.docker
-            image: appleboy/drone-git-push
-            type: Plugin
-            settings:
-              branch: master
-              remote: git@git.heroku.com:falling-wind-1624.git
-              force: false
-              commit: true
-              ssh_key: ${{ secrets.get("github-key") }}
+kind: pipeline
+name: default
+
+steps:
+- name: git-push
+  image: appleboy/drone-git-push
+  settings:
+    branch: master
+    remote: git@git.heroku.com:falling-wind-1624.git
+    force: false
+    commit: true
+    ssh_key: ${{ secrets.get("github-key") }}
