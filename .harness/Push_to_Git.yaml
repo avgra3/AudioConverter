@@ -1,3 +1,4 @@
+kind: pipeline
 pipeline:
   name: Push to Github
   identifier: Push_to_Github
