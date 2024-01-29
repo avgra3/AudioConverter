@@ -1,19 +1,15 @@
 kind: pipeline
-pipeline:
+spec:
   stages:
-    - identifier: default
-      name: default
-      steps:
-        - identifier: git-push
-          name: git-push
-          spec:
-            connectorRef: account.docker
-            image: appleboy/drone-git-push
-            type: Plugin
-            settings:
-              branch: main
-              remote: https://github.com/avgra3/AudioConverter.git
-              force: false
-              commit: true
-              ssh_key: ${{ secrets.get("github-key") }}
-
+    - type: ci
+      spect:
+        steps:
+          - name: pushes
+            type: plugin
+            spec:
+              name: git-push-plugin
+              spec:
+                name: git-push
+                inputs:
+                  ssh_key: ${{ secrets.get("github-key") }}
+            
