@@ -1,12 +1,16 @@
-kind: pipeline
-name: default
-
-steps:
-- name: git-push
-  image: appleboy/drone-git-push
-  settings:
-    branch: master
-    remote: git@github.com:avgra3/AudioConverter.git
-    force: false
-    commit: true
-    ssh_key: ${{ secrets.get("github-key") }}
+pipeline:
+  name: Push to Github
+  identifier: Push_to_Github
+  tags:
+    docs: **
+  stages:
+    - stage:
+        name: gh-push
+        identifier: gh-push
+        image: appleboy/drone-git-push
+        settings:
+        branch: master
+        remote: git@github.com:avgra3/AudioConverter.git
+        force: false
+        commit: true
+        ssh_key: ${{ secrets.get("github-key") }}
