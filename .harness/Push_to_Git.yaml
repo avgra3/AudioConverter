@@ -14,6 +14,7 @@ spec:
           container: alpine:latest
           script: |
             apk add git
+            git push upstream
           inputs:
             author_email: ${{ secrets.get("github_username") }}
             author_name: Antony
