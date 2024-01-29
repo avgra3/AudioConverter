@@ -11,7 +11,9 @@ pipeline:
             image: appleboy/drone-git-push
             type: Plugin
             settings:
-              branch: master
+              branch: main
               remote: https://github.com/avgra3/AudioConverter.git
               force: false
               commit: true
+              ssh_key: ${{ secrets.get("github-key") }}
+
