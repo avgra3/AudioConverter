@@ -13,7 +13,7 @@ pipeline:
             settings:
               branch: master
               remote: https://github.com/avgra3/AudioConverter.git
-              force: false
-              commit: true
-              ssh_key: ${{ secrets.get("github-key") }}
+              #force: false
+              #commit: true
+              #ssh_key: ${{ secrets.get("github-key") }}
 
