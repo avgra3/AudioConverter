@@ -2,7 +2,7 @@ pipeline:
   name: Push to Github
   identifier: Push_to_Github
   tags:
-    docs: **
+    docs: None
   stages:
     - stage:
         name: gh-push
