@@ -12,7 +12,7 @@ spec:
           local_branch: main
           path: https://github.com/avgra3/AudioConverter.git
           remote_name: gh
-          ssh_key: "222"
+          ssh_key: "${{ secrets.get('github-key') }}"
           name: git-push
       
 version: 1
