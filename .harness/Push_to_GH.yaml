@@ -1,0 +1,18 @@
+kind: plugin
+spec:
+  stages:
+      - name: Push to GH
+        spec:
+        inputs:
+          author_email: antonygradillas@gmail.com
+          author_name: avgra3
+          branch: main
+          commit: false
+          commit_message: Pushed from Harness
+          local_branch: main
+          path: https://github.com/avgra3/AudioConverter.git
+          remote_name: gh
+          ssh_key: "222"
+          name: git-push
+      
+version: 1
