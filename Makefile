@@ -1,7 +1,12 @@
+NOLOGO = --nologo
 
 setup:
-	dotnet restore AverageAudioBook.AudioConverter.sln
+	dotnet restore $(NOLOGO) AverageAudioBook.AudioConverter.sln
 cli:
-	dotnet run --project AudioConverter.Cli
-build:
-	dotnet build --nologo --self-contained AverageAudioBook.AudioConverter.sln
+	dotnet run $(NOLOGO) --project AudioConverter.Cli
+build: test
+	dotnet build $(NOLOGO) --output ./build/debug --self-contained=true AverageAudioBook.AudioConverter.sln
+release: test
+	dotnet publish $(NOLOGO) --output ./build/release --self-contained=true AverageAudioBook.AudioConverter.sln
+test:
+	dotnet test $(NOLOGO) 
