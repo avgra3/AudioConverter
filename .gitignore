@@ -485,3 +485,7 @@ $RECYCLE.BIN/
 
 # Temp files created by App
 Output
+
+
+# Remove harness
+.harness
