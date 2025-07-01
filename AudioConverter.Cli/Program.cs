@@ -7,14 +7,15 @@ public class Cli
 	public static async Task Main()
 	{
 		AnsiConsole.Markup("[underline red]WELCOME TO AUDIO CONVERTER[/]\n");
-		var audio = new AverageAudioBook.AudioConverter.AudioConverter();
+		// var audio = new AverageAudioBook.AudioConverter.AudioConverter();
 		string[] inputs = Inputs();
 		bool overwrite = false;
 		if (inputs[3] == "y")
 		{
 			overwrite = true;
 		}
-		var results = await audio.ConvertAudible(activation_bytes: inputs[0], input_file: inputs[1], ffmpeg_path: inputs[2], overwrite: overwrite);
+		var results = await AverageAudioBook.AudioConverter.AudioConverter.ConvertAudible(activation_bytes: inputs[0], input_file: inputs[1], ffmpeg_path: inputs[2], overwrite: overwrite);
+		// var results = await AudioConverter.ConvertAudible(activation_bytes: inputs[0], input_file: inputs[1], ffmpeg_path: inputs[2], overwrite: overwrite);
 		AnsiConsole.Markup("\n[green]DONE![/]\n");
 	}
 
