@@ -53,7 +53,7 @@ make release
 - [ ] Allow for change of default Output location
 - [ ] Once conversion - notify user where the output location is
 - [ ] _Optional:_ Allow the user to open their system's default file explorer
-    - [ ] Linux
+    - [x] Linux
     - [ ] Windows
-    - [ ] OSX
+    - [x] OSX
 
