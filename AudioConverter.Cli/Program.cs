@@ -29,7 +29,8 @@ public class Cli
 		string orange = "#ff4f33";
 
 		var audioFile = AnsiConsole.Prompt(
-		    new TextPrompt<string>("Full path to audio file:")
+		    new TextPrompt<string>("Full path to audio file [teal]change the selected if you want to convert a different file[/]:")
+		    .DefaultValue<string>(GetFilePath.OpenFileExplorerAndGetPath())
 		    );
 		var wantedOutput = AnsiConsole.Prompt(
 				new SelectionPrompt<string>()
