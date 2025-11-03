@@ -9,7 +9,7 @@ public class AudioConverter
 {
     // What we want to happen:
     // ffmpeg -activation_bytes <ACTIVATION_BYTES> -i <PATH_TO_FILE>/<AUDIBLE_FILE>.aax -c copy <PATH_TO_OUTPUT_FILE>/<NEW_AUDIO_FILE>.mp4
-    public async Task<string[]> ConvertAudible(string activation_bytes, string input_file, string ffmpeg_path = "ffmpeg", bool overwrite = true)
+    public async Task<string[]> ConvertAudible(string activation_bytes, string input_file, string ffmpeg_path = "ffmpeg", bool overwrite = true, string output_suffix = ".mp4")
     {
         // Checks input file exists - otherwise fail
         if (!FileExists(path_to_file: input_file))
@@ -22,6 +22,12 @@ public class AudioConverter
         if (!VerifyDirectory(input_directory: output_dir))
         {
             CreateDirectory();
+        }
+        string output_file = $"{output_dir}/{Path.GetFileName(ChangeSuffix(input_file, output_suffix: output_suffix))}";
+        if (FileExists(path_to_file: output_file))
+        {
+            Console.WriteLine($"Output file exists! {output_file}");
+            Environment.Exit(-1);
         }
 
         string overwriteFlag = "-";
@@ -47,7 +53,7 @@ public class AudioConverter
                 .Add(overwriteFlag)
                 .Add("-c")
                 .Add("copy")
-                .Add($"{output_dir}/{Path.GetFileName(ChangeSuffix(input_file))}");
+                .Add(output_file);
             }).WithWorkingDirectory(".")
             .WithStandardOutputPipe(PipeTarget.ToStringBuilder(stdOutBuffer))
             .WithStandardErrorPipe(PipeTarget.ToStringBuilder(stdErrBuffer))
@@ -98,7 +104,7 @@ public class AudioConverter
                 .Add(overwriteFlag)
                 .Add("-c")
                 .Add("copy")
-                .Add($"{output_dir}/{ChangeSuffix(Path.GetFileName(input_file))}");
+                .Add($"{output_dir}/{ChangeSuffix(Path.GetFileName(input_file), ".m4b")}");
             }).WithWorkingDirectory(".")
             .WithStandardOutputPipe(PipeTarget.ToStringBuilder(stdOutBuffer))
             .WithStandardErrorPipe(PipeTarget.ToStringBuilder(stdErrBuffer))
@@ -108,12 +114,15 @@ public class AudioConverter
         var stdErr = stdErrBuffer.ToString();
         string[] results = { stdOut, stdErr };
         return results;
-    }// mp3 -> mp4
-    // mp4 -> mp3
+    }
 
-    private static string ChangeSuffix(string input_file)
+    private static string ChangeSuffix(string input_file, string output_suffix = ".mp4")
     {
         string fileName = Path.GetFileName(input_file);
+        if (output_suffix != ".mp4")
+        {
+            return Path.ChangeExtension(fileName, output_suffix);
+        }
         if (Path.GetExtension(fileName) == ".aax")
         {
             return Path.ChangeExtension(fileName, ".mp4");

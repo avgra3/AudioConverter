@@ -7,7 +7,6 @@ public class Cli
 	public static async Task Main()
 	{
 		AnsiConsole.Markup("[underline red]WELCOME TO AUDIO CONVERTER[/]\n");
-		// var audio = new AverageAudioBook.AudioConverter.AudioConverter();
 		string[] inputs = Inputs();
 		bool overwrite = false;
 		if (inputs[3] == "y")
@@ -15,9 +14,14 @@ public class Cli
 			overwrite = true;
 		}
 		AverageAudioBook.AudioConverter.AudioConverter converter = new AverageAudioBook.AudioConverter.AudioConverter();
-		var results = await converter.ConvertAudible(activation_bytes: inputs[0], input_file: inputs[1], ffmpeg_path: inputs[2], overwrite: overwrite);
-		// var results = await AudioConverter.ConvertAudible(activation_bytes: inputs[0], input_file: inputs[1], ffmpeg_path: inputs[2], overwrite: overwrite);
+		var results = await converter.ConvertAudible(activation_bytes: inputs[0], input_file: inputs[1], ffmpeg_path: inputs[2], overwrite: overwrite, output_suffix: inputs[4]);
+		if (results[0] != "")
+		{
+			AnsiConsole.MarkupInterpolated($"[red]ERROR: [/]{results[0]}\n");
+
+		}
 		AnsiConsole.Markup("\n[green]DONE![/]\n");
+		AnsiConsole.MarkupInterpolated($"[yellow]Output: [/]{results[1]}\n");
 	}
 
 	private static string[] Inputs()
@@ -27,8 +31,13 @@ public class Cli
 		var audioFile = AnsiConsole.Prompt(
 		    new TextPrompt<string>("Full path to audio file:")
 		    );
+		var wantedOutput = AnsiConsole.Prompt(
+				new SelectionPrompt<string>()
+				.Title("What output file extension do you expect?")
+				.PageSize(10)
+				.AddChoices(new[] { "m4b", "mp4" }));
 		bool overwriteBool = false;
-		if (FileExists(audioFile))
+		if (FileExists(file: audioFile, expected_extension: "." + wantedOutput))
 		{
 			overwriteBool = AnsiConsole.Prompt(
 			    new SelectionPrompt<bool>()
@@ -36,6 +45,13 @@ public class Cli
 			    .PageSize(10)
 			    .MoreChoicesText("[grey]Select True or False to overwrite output file if exists.[/]")
 			    .AddChoices([true, false]));
+			// Just exit the program if the user selects false.
+			if (!overwriteBool)
+			{
+				AnsiConsole.Markup("[teal]You elected to not overwrite the current file of the same name. Now exiting the program. Goodbye![/]\n");
+				Environment.Exit(-1);
+
+			}
 		}
 		string overwriteFlag = overwriteBool ? "y" : "n";
 		AnsiConsole.Markup($"Overwrite file: {overwriteBool}\n");
@@ -73,13 +89,13 @@ public class Cli
 			Environment.Exit(-1);
 		}
 
-		string[] inputs = [activationBytes, audioFile, ffmpegLocation, overwriteFlag];
+		string[] inputs = [activationBytes, audioFile, ffmpegLocation, overwriteFlag, "." + wantedOutput];
 		return inputs;
 	}
 
-	private static bool FileExists(string file)
+	private static bool FileExists(string file, string expected_extension = ".m4b")
 	{
-		string fileOutput = Path.ChangeExtension(file, ".m4b");
+		string fileOutput = Path.ChangeExtension(file, expected_extension);
 		fileOutput = Path.GetFileName(fileOutput);
 		return File.Exists(Directory.GetCurrentDirectory() + "/Output/" + fileOutput);
 	}
