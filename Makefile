@@ -5,8 +5,10 @@ setup:
 cli:
 	dotnet run $(NOLOGO) --project AudioConverter.Cli
 build: test
-	dotnet build $(NOLOGO) --output ./build/debug --self-contained=true AverageAudioBook.AudioConverter.sln
+	dotnet build $(NOLOGO) --output=./build/debug --verbosity=d AverageAudioBook.AudioConverter.sln
+
 release: test
-	dotnet publish $(NOLOGO) --output ./build/release --self-contained=true AverageAudioBook.AudioConverter.sln
+	dotnet publish $(NOLOGO) --output=./build/release AverageAudioBook.AudioConverter.sln
+
 test:
 	dotnet test $(NOLOGO) 

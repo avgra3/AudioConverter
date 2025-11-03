@@ -14,7 +14,8 @@ public class Cli
 		{
 			overwrite = true;
 		}
-		var results = await AverageAudioBook.AudioConverter.AudioConverter.ConvertAudible(activation_bytes: inputs[0], input_file: inputs[1], ffmpeg_path: inputs[2], overwrite: overwrite);
+		AverageAudioBook.AudioConverter.AudioConverter converter = new AverageAudioBook.AudioConverter.AudioConverter();
+		var results = await converter.ConvertAudible(activation_bytes: inputs[0], input_file: inputs[1], ffmpeg_path: inputs[2], overwrite: overwrite);
 		// var results = await AudioConverter.ConvertAudible(activation_bytes: inputs[0], input_file: inputs[1], ffmpeg_path: inputs[2], overwrite: overwrite);
 		AnsiConsole.Markup("\n[green]DONE![/]\n");
 	}
