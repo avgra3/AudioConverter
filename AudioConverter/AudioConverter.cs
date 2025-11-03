@@ -24,9 +24,9 @@ public class AudioConverter
             CreateDirectory();
         }
         string output_file = $"{output_dir}/{Path.GetFileName(ChangeSuffix(input_file, output_suffix: output_suffix))}";
-        if (FileExists(path_to_file: output_file))
+        if (FileExists(path_to_file: output_file) && !overwrite)
         {
-            Console.WriteLine($"Output file exists! {output_file}");
+            Console.WriteLine($"Output file exists! `{output_file}`");
             Environment.Exit(-1);
         }
 

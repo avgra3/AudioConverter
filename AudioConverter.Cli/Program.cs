@@ -55,14 +55,13 @@ public class Cli
 			}
 		}
 		string overwriteFlag = overwriteBool ? "y" : "n";
-		AnsiConsole.Markup($"Overwrite file: {overwriteBool}\n");
 		if (audioFile.Trim() == string.Empty)
 		{
 			AnsiConsole.Markup("[red]A full path to the audio file is necessary in order for the app to work. Please try again![/]");
 			Environment.Exit(-1);
 		}
 		var activationBytes = AnsiConsole.Prompt(
-		    new TextPrompt<string>("[[Optional]] Activation Bytes (leave blank if environment variable):")
+		    new TextPrompt<string>("[gray][[Optional]][/] Activation Bytes (leave blank if environment variable):")
 		    .AllowEmpty());
 		if (activationBytes.Trim() == string.Empty)
 		{
@@ -77,7 +76,7 @@ public class Cli
 			}
 		}
 		var ffmpegLocation = AnsiConsole.Prompt(
-		    new TextPrompt<string>("[[Optional]] FFMPEG path (leave blank if on system path):")
+		    new TextPrompt<string>("[grey][[Optional]][/] FFMPEG path (leave blank if on system path):")
 		    .AllowEmpty());
 		if (ffmpegLocation.Trim() == string.Empty)
 		{

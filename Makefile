@@ -12,3 +12,5 @@ release: clean test
 	dotnet publish $(NOLOGO) --output=./build/release AudioConverter.Cli/
 clean:
 	rm -rf build/
+run: test
+	dotnet run --project AudioConverter.Cli
