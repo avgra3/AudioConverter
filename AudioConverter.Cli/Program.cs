@@ -6,14 +6,14 @@ public class Cli
 {
 	public static async Task Main()
 	{
-		AnsiConsole.Markup("[underline red]WELCOME TO AUDIO CONVERTER[/]\n");
+		AnsiConsole.Markup("[underline green]WELCOME TO AUDIO CONVERTER[/]\n");
 		string[] inputs = Inputs();
 		bool overwrite = false;
 		if (inputs[3] == "y")
 		{
 			overwrite = true;
 		}
-		AverageAudioBook.AudioConverter.AudioConverter converter = new AverageAudioBook.AudioConverter.AudioConverter();
+		AverageAudioBook.AudioConverter.AudioConverter converter = new();
 		var results = await converter.ConvertAudible(activation_bytes: inputs[0], input_file: inputs[1], ffmpeg_path: inputs[2], overwrite: overwrite, output_suffix: inputs[4]);
 		if (results[0] != "")
 		{
@@ -30,13 +30,13 @@ public class Cli
 
 		var audioFile = AnsiConsole.Prompt(
 		    new TextPrompt<string>("Full path to audio file [teal]change the selected if you want to convert a different file[/]:")
-		    .DefaultValue<string>(GetFilePath.OpenFileExplorerAndGetPath())
+		    .DefaultValue(GetFilePath.OpenFileExplorerAndGetPath())
 		    );
 		var wantedOutput = AnsiConsole.Prompt(
 				new SelectionPrompt<string>()
 				.Title("What output file extension do you expect?")
 				.PageSize(10)
-				.AddChoices(new[] { "m4b", "mp4" }));
+				.AddChoices(["m4b", "mp4"]));
 		bool overwriteBool = false;
 		if (FileExists(file: audioFile, expected_extension: "." + wantedOutput))
 		{
