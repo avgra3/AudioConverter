@@ -1,7 +1,5 @@
 using System.Text;
 using CliWrap;
-using System;
-using System.IO;
 
 namespace AverageAudioBook.AudioConverter;
 
@@ -24,9 +22,9 @@ public class AudioConverter
             CreateDirectory();
         }
         string output_file = $"{output_dir}/{Path.GetFileName(ChangeSuffix(input_file, output_suffix: output_suffix))}";
-        if (FileExists(path_to_file: output_file))
+        if (FileExists(path_to_file: output_file) && !overwrite)
         {
-            Console.WriteLine($"Output file exists! {output_file}");
+            Console.WriteLine($"Output file exists! `{output_file}`");
             Environment.Exit(-1);
         }
 
@@ -61,7 +59,7 @@ public class AudioConverter
 
         var stdOut = stdOutBuffer.ToString();
         var stdErr = stdErrBuffer.ToString();
-        string[] results = { stdOut, stdErr };
+        string[] results = [stdOut, stdErr];
         return results;
     }
 

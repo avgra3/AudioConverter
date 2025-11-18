@@ -6,14 +6,15 @@ public class Cli
 {
 	public static async Task Main()
 	{
-		AnsiConsole.Markup("[underline red]WELCOME TO AUDIO CONVERTER[/]\n");
+		AnsiConsole.Markup("[underline green]WELCOME TO AUDIO CONVERTER[/]\n");
 		string[] inputs = Inputs();
 		bool overwrite = false;
 		if (inputs[3] == "y")
 		{
 			overwrite = true;
 		}
-		AverageAudioBook.AudioConverter.AudioConverter converter = new AverageAudioBook.AudioConverter.AudioConverter();
+		AverageAudioBook.AudioConverter.AudioConverter converter = new();
+		AnsiConsole.MarkupLine("[cyan]processing your file now![/]");
 		var results = await converter.ConvertAudible(activation_bytes: inputs[0], input_file: inputs[1], ffmpeg_path: inputs[2], overwrite: overwrite, output_suffix: inputs[4]);
 		if (results[0] != "")
 		{
@@ -21,7 +22,9 @@ public class Cli
 
 		}
 		AnsiConsole.Markup("\n[green]DONE![/]\n");
+#if DEBUG
 		AnsiConsole.MarkupInterpolated($"[yellow]Output: [/]{results[1]}\n");
+#endif
 	}
 
 	private static string[] Inputs()
@@ -29,13 +32,14 @@ public class Cli
 		string orange = "#ff4f33";
 
 		var audioFile = AnsiConsole.Prompt(
-		    new TextPrompt<string>("Full path to audio file:")
+		    new TextPrompt<string>("Full path to audio file [teal]change the selected if you want to convert a different file[/]:")
+		    .DefaultValue(GetFilePath.OpenFileExplorerAndGetPath())
 		    );
 		var wantedOutput = AnsiConsole.Prompt(
 				new SelectionPrompt<string>()
 				.Title("What output file extension do you expect?")
 				.PageSize(10)
-				.AddChoices(new[] { "m4b", "mp4" }));
+				.AddChoices(["m4b", "mp4"]));
 		bool overwriteBool = false;
 		if (FileExists(file: audioFile, expected_extension: "." + wantedOutput))
 		{
@@ -54,14 +58,13 @@ public class Cli
 			}
 		}
 		string overwriteFlag = overwriteBool ? "y" : "n";
-		AnsiConsole.Markup($"Overwrite file: {overwriteBool}\n");
 		if (audioFile.Trim() == string.Empty)
 		{
 			AnsiConsole.Markup("[red]A full path to the audio file is necessary in order for the app to work. Please try again![/]");
 			Environment.Exit(-1);
 		}
 		var activationBytes = AnsiConsole.Prompt(
-		    new TextPrompt<string>("[[Optional]] Activation Bytes (leave blank if environment variable):")
+		    new TextPrompt<string>("[gray][[Optional]][/] Activation Bytes (leave blank if environment variable):")
 		    .AllowEmpty());
 		if (activationBytes.Trim() == string.Empty)
 		{
@@ -76,7 +79,7 @@ public class Cli
 			}
 		}
 		var ffmpegLocation = AnsiConsole.Prompt(
-		    new TextPrompt<string>("[[Optional]] FFMPEG path (leave blank if on system path):")
+		    new TextPrompt<string>("[grey][[Optional]][/] FFMPEG path (leave blank if on system path):")
 		    .AllowEmpty());
 		if (ffmpegLocation.Trim() == string.Empty)
 		{
