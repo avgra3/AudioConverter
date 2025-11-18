@@ -22,7 +22,9 @@ public class Cli
 
 		}
 		AnsiConsole.Markup("\n[green]DONE![/]\n");
+#if DEBUG
 		AnsiConsole.MarkupInterpolated($"[yellow]Output: [/]{results[1]}\n");
+#endif
 	}
 
 	private static string[] Inputs()
