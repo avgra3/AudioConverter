@@ -1,7 +1,5 @@
 using System.Text;
 using CliWrap;
-using System;
-using System.IO;
 
 namespace AverageAudioBook.AudioConverter;
 
@@ -61,7 +59,7 @@ public class AudioConverter
 
         var stdOut = stdOutBuffer.ToString();
         var stdErr = stdErrBuffer.ToString();
-        string[] results = { stdOut, stdErr };
+        string[] results = [stdOut, stdErr];
         return results;
     }
 
